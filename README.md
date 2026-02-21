@@ -35,6 +35,7 @@ A **local-first, privacy-preserving AI Employee** that:
 - **Processes** tasks through a safe, auditable pipeline
 - **Moves** completed tasks to `Done/`
 - **Updates** a live `Dashboard.md` you can open in Obsidian
+- **Follows** rules defined in `Company_Handbook.md` (communication tone, payment approval thresholds, approval requirements)
 
 No cloud services. No paid APIs. No data leaving your machine. Pure Python + local files.
 
@@ -81,6 +82,8 @@ The `AI_Employee_Vault/` folder is the AI Employee's **persistent memory**.
 Every file, plan, log, and decision lives here — readable in Obsidian or any
 text editor. No hidden state, no black boxes.
 
+**Company_Handbook.md** is the single source of truth for how the AI Employee should behave: Rules of Engagement (e.g. "Always be polite on WhatsApp", "Flag any payment over $500 for approval"), task types and default actions, priority rules, and approval requirements. Edit it to match your business and risk tolerance.
+
 ---
 
 ## Project Structure
@@ -100,6 +103,7 @@ Hackathon - 0 - New/
 └── AI_Employee_Vault/
     │
     ├── Dashboard.md        ← Live system dashboard (auto-updated)
+    ├── Company_Handbook.md ← Rules of engagement, task types, approval rules (edit to customise)
     │
     ├── Inbox/              ← Drop new files here
     ├── Needs_Action/       ← Watcher routes files here + meta.md
@@ -158,6 +162,9 @@ run_agent.bat
 run_rollback.bat
 setup.bat
 AI_Employee_Vault/  (already created)
+  ├── Dashboard.md
+  ├── Company_Handbook.md   ← Bronze requirement: rules of engagement
+  └── Inbox/, Needs_Action/, Done/, Plans/, Logs/, etc.
 ```
 
 ### Step 2 — Run Setup (Windows)
@@ -215,6 +222,7 @@ run_agent.bat --dry                   # Windows
 2. "Open folder as vault"
 3. Select `AI_Employee_Vault/`
 4. Open `Dashboard.md` as your home note
+5. Edit `Company_Handbook.md` to set your rules of engagement (tone, payment thresholds, approval rules)
 
 ---
 
@@ -291,6 +299,11 @@ python claude_agent.py --scan
 ## How Claude Code Uses the Vault
 
 When Claude Code (Cursor) opens this workspace, it can:
+
+### Read Rules & Context
+```
+Read AI_Employee_Vault/Company_Handbook.md for rules of engagement, task types, and approval requirements
+```
 
 ### Read Tasks
 ```
